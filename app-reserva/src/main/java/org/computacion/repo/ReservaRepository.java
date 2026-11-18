@@ -1,5 +1,6 @@
 package org.computacion.repo;
 
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -12,20 +13,20 @@ import java.util.List;
 @Transactional
 public class ReservaRepository implements PanacheRepositoryBase<Reserva, Integer> {
 
-    public List<Reserva> buscarReservas() {
-        return this.listAll();
+    public List<Reserva> buscarReservasActivas() {
+        return list("estado", true);
     }
 
-    public void guardarReserva(Reserva reserva) {
-        this.persist(reserva);
+    public List<Reserva> buscarPorSala(Integer idSala) {
+        return list("idSala", idSala);
     }
 
-    public boolean existeReservaSolapada(Integer idSala, LocalDateTime inicio, LocalDateTime fin) {
-        return count(
-                "sala.id = ?1 AND estado = 'ACTIVA' " + "AND fechaHoraInicio < ?3 AND fechaHoraFin > ?2",
-                idSala,
-                inicio,
-                fin) > 0;
+    public boolean existeReservaSolapada( Integer idSala, LocalDateTime inicio, LocalDateTime fin) {
+
+        long cantidad = count( "idSala = ?1 and estado = true and"+
+                "(fechaHorarioInicio >?2 and fechaHorarioFin<=?3)", idSala, inicio, fin);
+
+        return cantidad > 0;
     }
 }
 

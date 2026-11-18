@@ -20,6 +20,7 @@ public class Materia {
 
     private String periodo;
 
-    @Column(name = "id_profesor")
-    private Integer idProfesor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_profesor", nullable = false)
+    private Profesor profesor;
 }

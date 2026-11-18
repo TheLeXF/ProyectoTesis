@@ -16,9 +16,6 @@ public class Sala {
 
     private String nombre;
 
-    private String ubicacion;
+    private Integer responsable;
 
-    private Integer capacidad;
-
-    private String estado;
 }

@@ -27,13 +27,13 @@ public class Reserva {
     @Column(name = "id_reservante", nullable = false)
     private Integer idReservante;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_materia", nullable = false)
     private Materia materia;
 
-    @ManyToOne
-    @JoinColumn(name = "id_sala", nullable = false)
-    private Sala sala;
+    private String sala;
 
-    private String estado; // ACTIVA, CANCELADA
+    private Boolean estado;
+
+
 }

@@ -22,14 +22,23 @@ java {
 dependencies {
     implementation( enforcedPlatform("io.quarkus:quarkus-bom:${quarkusVersion}"))
 
+    //CDI
     implementation("io.quarkus:quarkus-arc")
 
+    //Rest Cliente
     implementation("io.quarkus:quarkus-rest")
     implementation("io.quarkus:quarkus-rest-jsonb")
 
+    //DB
     implementation("io.quarkus:quarkus-hibernate-orm")
     implementation("io.quarkus:quarkus-hibernate-orm-panache")
     implementation("io.quarkus:quarkus-jdbc-postgresql")
+
+    //JavaDocs
+    implementation("org.modelmapper:modelmapper:3.2.6")
+
+    //swagger
+    implementation("io.quarkus:quarkus-smallrye-openapi")
 
 
 }

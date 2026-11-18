@@ -7,6 +7,8 @@ import jakarta.ws.rs.core.Response;
 import org.computacion.db.Reserva;
 import org.computacion.service.ReservaService;
 
+import java.util.List;
+
 
 @Path("/reservas")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -16,22 +18,27 @@ public class ReservaRest {
     @Inject
     ReservaService reservaService;
 
-    @POST
-    public Response crearReserva(Reserva reserva) {
-        try {
-            reservaService.crearReserva(reserva);
-            return Response.status(Response.Status.CREATED).entity(reserva).build();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(e.getMessage())
-                    .build();
-        }
+    @GET
+    public List<Reserva> obtenerReservas() {
+        return reservaService.listarReservas();
     }
 
     @GET
-    public Response obtenerReservas() {
-        return Response.ok(reservaService.obtenerReservas()).build();
+    @Path("/{id}")
+    public Reserva obtenerReservaPorId(@PathParam("id") Integer id) {
+        return reservaService.buscarReserva(id);
+    }
+
+    @POST
+    public Reserva crearReserva(Reserva reserva) {
+        return reservaService.crearReserva(reserva);
+    }
+
+    @PUT
+    @Path("/{id}/cancelar")
+    public Reserva cancelarReserva(@PathParam("id") Integer id) {
+
+        return reservaService.cancelarReserva(id);
     }
 
 
